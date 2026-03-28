@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import DashboardSidebar from "../components/DashboardSidebar";
 import MetricCard from "../components/MetricCard";
 import BandwidthChart from "../components/BandwidthChart";
@@ -39,6 +41,14 @@ const itemVariants = {
 };
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (sessionStorage.getItem("esk_authenticated") !== "true") {
+      navigate("/login");
+    }
+  }, [navigate]);
+
   return (
     <div className="flex min-h-screen bg-background relative">
       {/* Subtle particle field background */}
@@ -51,7 +61,7 @@ const Dashboard = () => {
       <main className="flex-1 overflow-y-auto relative z-10">
         {/* Header */}
         <motion.header
-          className="sticky top-0 z-40 h-14 border-b border-border bg-background/80 backdrop-blur-xl flex items-center justify-between px-8"
+          className="sticky top-0 z-40 h-14 border-b border-border bg-background/80 backdrop-blur-xl flex items-center justify-between px-4 sm:px-8 pl-14 md:pl-8"
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.4 }}
@@ -91,7 +101,7 @@ const Dashboard = () => {
           </div>
         </motion.header>
 
-        <div className="p-8 space-y-6">
+        <div className="p-4 sm:p-8 space-y-4 sm:space-y-6">
           {/* Top Metrics */}
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
